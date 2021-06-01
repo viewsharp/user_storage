@@ -124,3 +124,47 @@ func (o *PutUserNotFound) WriteResponse(rw http.ResponseWriter, producer runtime
 
 	rw.WriteHeader(404)
 }
+
+// PutUserInternalServerErrorCode is the HTTP code returned for type PutUserInternalServerError
+const PutUserInternalServerErrorCode int = 500
+
+/*PutUserInternalServerError Internal error
+
+swagger:response putUserInternalServerError
+*/
+type PutUserInternalServerError struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Error `json:"body,omitempty"`
+}
+
+// NewPutUserInternalServerError creates PutUserInternalServerError with default headers values
+func NewPutUserInternalServerError() *PutUserInternalServerError {
+
+	return &PutUserInternalServerError{}
+}
+
+// WithPayload adds the payload to the put user internal server error response
+func (o *PutUserInternalServerError) WithPayload(payload *models.Error) *PutUserInternalServerError {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the put user internal server error response
+func (o *PutUserInternalServerError) SetPayload(payload *models.Error) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *PutUserInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(500)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}

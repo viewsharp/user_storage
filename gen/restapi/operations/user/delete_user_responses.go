@@ -9,6 +9,8 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	"user_server/gen/models"
 )
 
 // DeleteUserOKCode is the HTTP code returned for type DeleteUserOK
@@ -57,4 +59,48 @@ func (o *DeleteUserNotFound) WriteResponse(rw http.ResponseWriter, producer runt
 	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
 
 	rw.WriteHeader(404)
+}
+
+// DeleteUserInternalServerErrorCode is the HTTP code returned for type DeleteUserInternalServerError
+const DeleteUserInternalServerErrorCode int = 500
+
+/*DeleteUserInternalServerError Internal error
+
+swagger:response deleteUserInternalServerError
+*/
+type DeleteUserInternalServerError struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Error `json:"body,omitempty"`
+}
+
+// NewDeleteUserInternalServerError creates DeleteUserInternalServerError with default headers values
+func NewDeleteUserInternalServerError() *DeleteUserInternalServerError {
+
+	return &DeleteUserInternalServerError{}
+}
+
+// WithPayload adds the payload to the delete user internal server error response
+func (o *DeleteUserInternalServerError) WithPayload(payload *models.Error) *DeleteUserInternalServerError {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the delete user internal server error response
+func (o *DeleteUserInternalServerError) SetPayload(payload *models.Error) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *DeleteUserInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(500)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
 }
