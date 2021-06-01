@@ -1,0 +1,118 @@
+swagger: '2.0'
+info:
+  version: "1.0.0"
+  title: UserServer Swagger
+  contact:
+    name: Contact the developer
+    url: https://t.me/viewsharp
+tags:
+  - name: user
+    description: Operations about user
+paths:
+  '/user':
+    post:
+      tags:
+        - user
+      summary: Create user
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        description: Created user object
+        required: true
+        schema:
+          $ref: '#/definitions/UserEditableData'
+      responses:
+        '201':
+          description: Success
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Invalid format
+          schema:
+            $ref: '#/definitions/Error'
+  '/user/{id}':
+    get:
+      tags:
+        - user
+      summary: Get user by id
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/User'
+        '404':
+          description: User not found
+    put:
+      tags:
+        - user
+      summary: Updated user
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: Created user object
+          required: true
+          schema:
+            $ref: '#/definitions/UserEditableData'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Invalid format
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: User not found
+    delete:
+      tags:
+        - user
+      summary: Delete user
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success
+        '404':
+          description: User not found
+definitions:
+  UserEditableData:
+    type: object
+    properties:
+      name:
+        type: string
+      birth_date:
+        type: string
+        format: date
+  User:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      birth_date:
+        type: string
+        format: date
+  Error:
+    type: object
+    properties:
+      error:
+        type: string
