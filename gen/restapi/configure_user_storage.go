@@ -38,14 +38,14 @@ func configureAPI(api *operations.UserStorageAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	if api.UserDeleteUserIDHandler == nil {
-		api.UserDeleteUserIDHandler = user.DeleteUserIDHandlerFunc(func(params user.DeleteUserIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation user.DeleteUserID has not yet been implemented")
+	if api.UserDeleteUserHandler == nil {
+		api.UserDeleteUserHandler = user.DeleteUserHandlerFunc(func(params user.DeleteUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.DeleteUser has not yet been implemented")
 		})
 	}
-	if api.UserGetUserIDHandler == nil {
-		api.UserGetUserIDHandler = user.GetUserIDHandlerFunc(func(params user.GetUserIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation user.GetUserID has not yet been implemented")
+	if api.UserGetUserHandler == nil {
+		api.UserGetUserHandler = user.GetUserHandlerFunc(func(params user.GetUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.GetUser has not yet been implemented")
 		})
 	}
 	if api.UserPostUserHandler == nil {
@@ -53,9 +53,9 @@ func configureAPI(api *operations.UserStorageAPI) http.Handler {
 			return middleware.NotImplemented("operation user.PostUser has not yet been implemented")
 		})
 	}
-	if api.UserPutUserIDHandler == nil {
-		api.UserPutUserIDHandler = user.PutUserIDHandlerFunc(func(params user.PutUserIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation user.PutUserID has not yet been implemented")
+	if api.UserPutUserHandler == nil {
+		api.UserPutUserHandler = user.PutUserHandlerFunc(func(params user.PutUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.PutUser has not yet been implemented")
 		})
 	}
 

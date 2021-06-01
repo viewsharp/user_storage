@@ -19,19 +19,19 @@ import (
 	"user_server/gen/models"
 )
 
-// NewPutUserIDParams creates a new PutUserIDParams object
+// NewPutUserParams creates a new PutUserParams object
 //
 // There are no default values defined in the spec.
-func NewPutUserIDParams() PutUserIDParams {
+func NewPutUserParams() PutUserParams {
 
-	return PutUserIDParams{}
+	return PutUserParams{}
 }
 
-// PutUserIDParams contains all the bound params for the put user ID operation
+// PutUserParams contains all the bound params for the put user operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters PutUserID
-type PutUserIDParams struct {
+// swagger:parameters putUser
+type PutUserParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -51,8 +51,8 @@ type PutUserIDParams struct {
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewPutUserIDParams() beforehand.
-func (o *PutUserIDParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewPutUserParams() beforehand.
+func (o *PutUserParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r
@@ -96,7 +96,7 @@ func (o *PutUserIDParams) BindRequest(r *http.Request, route *middleware.Matched
 }
 
 // bindID binds and validates parameter ID from path.
-func (o *PutUserIDParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
+func (o *PutUserParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]

@@ -29,7 +29,7 @@ func NewPostUserParams() PostUserParams {
 // PostUserParams contains all the bound params for the post user operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters PostUser
+// swagger:parameters postUser
 type PostUserParams struct {
 
 	// HTTP Request Object

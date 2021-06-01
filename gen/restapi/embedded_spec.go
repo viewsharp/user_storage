@@ -37,6 +37,7 @@ func init() {
           "user"
         ],
         "summary": "Create user",
+        "operationId": "postUser",
         "parameters": [
           {
             "description": "Created user object",
@@ -70,6 +71,7 @@ func init() {
           "user"
         ],
         "summary": "Get user by id",
+        "operationId": "getUser",
         "parameters": [
           {
             "type": "string",
@@ -96,6 +98,7 @@ func init() {
           "user"
         ],
         "summary": "Updated user",
+        "operationId": "putUser",
         "parameters": [
           {
             "type": "string",
@@ -137,6 +140,7 @@ func init() {
           "user"
         ],
         "summary": "Delete user",
+        "operationId": "deleteUser",
         "parameters": [
           {
             "type": "string",
@@ -221,6 +225,7 @@ func init() {
           "user"
         ],
         "summary": "Create user",
+        "operationId": "postUser",
         "parameters": [
           {
             "description": "Created user object",
@@ -254,6 +259,7 @@ func init() {
           "user"
         ],
         "summary": "Get user by id",
+        "operationId": "getUser",
         "parameters": [
           {
             "type": "string",
@@ -280,6 +286,7 @@ func init() {
           "user"
         ],
         "summary": "Updated user",
+        "operationId": "putUser",
         "parameters": [
           {
             "type": "string",
@@ -321,6 +328,7 @@ func init() {
           "user"
         ],
         "summary": "Delete user",
+        "operationId": "deleteUser",
         "parameters": [
           {
             "type": "string",

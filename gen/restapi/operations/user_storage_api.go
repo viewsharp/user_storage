@@ -44,17 +44,17 @@ func NewUserStorageAPI(spec *loads.Document) *UserStorageAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
-		UserDeleteUserIDHandler: user.DeleteUserIDHandlerFunc(func(params user.DeleteUserIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation user.DeleteUserID has not yet been implemented")
+		UserDeleteUserHandler: user.DeleteUserHandlerFunc(func(params user.DeleteUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.DeleteUser has not yet been implemented")
 		}),
-		UserGetUserIDHandler: user.GetUserIDHandlerFunc(func(params user.GetUserIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation user.GetUserID has not yet been implemented")
+		UserGetUserHandler: user.GetUserHandlerFunc(func(params user.GetUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.GetUser has not yet been implemented")
 		}),
 		UserPostUserHandler: user.PostUserHandlerFunc(func(params user.PostUserParams) middleware.Responder {
 			return middleware.NotImplemented("operation user.PostUser has not yet been implemented")
 		}),
-		UserPutUserIDHandler: user.PutUserIDHandlerFunc(func(params user.PutUserIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation user.PutUserID has not yet been implemented")
+		UserPutUserHandler: user.PutUserHandlerFunc(func(params user.PutUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.PutUser has not yet been implemented")
 		}),
 	}
 }
@@ -92,14 +92,14 @@ type UserStorageAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
-	// UserDeleteUserIDHandler sets the operation handler for the delete user ID operation
-	UserDeleteUserIDHandler user.DeleteUserIDHandler
-	// UserGetUserIDHandler sets the operation handler for the get user ID operation
-	UserGetUserIDHandler user.GetUserIDHandler
+	// UserDeleteUserHandler sets the operation handler for the delete user operation
+	UserDeleteUserHandler user.DeleteUserHandler
+	// UserGetUserHandler sets the operation handler for the get user operation
+	UserGetUserHandler user.GetUserHandler
 	// UserPostUserHandler sets the operation handler for the post user operation
 	UserPostUserHandler user.PostUserHandler
-	// UserPutUserIDHandler sets the operation handler for the put user ID operation
-	UserPutUserIDHandler user.PutUserIDHandler
+	// UserPutUserHandler sets the operation handler for the put user operation
+	UserPutUserHandler user.PutUserHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -177,17 +177,17 @@ func (o *UserStorageAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
-	if o.UserDeleteUserIDHandler == nil {
-		unregistered = append(unregistered, "user.DeleteUserIDHandler")
+	if o.UserDeleteUserHandler == nil {
+		unregistered = append(unregistered, "user.DeleteUserHandler")
 	}
-	if o.UserGetUserIDHandler == nil {
-		unregistered = append(unregistered, "user.GetUserIDHandler")
+	if o.UserGetUserHandler == nil {
+		unregistered = append(unregistered, "user.GetUserHandler")
 	}
 	if o.UserPostUserHandler == nil {
 		unregistered = append(unregistered, "user.PostUserHandler")
 	}
-	if o.UserPutUserIDHandler == nil {
-		unregistered = append(unregistered, "user.PutUserIDHandler")
+	if o.UserPutUserHandler == nil {
+		unregistered = append(unregistered, "user.PutUserHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -280,11 +280,11 @@ func (o *UserStorageAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/user/{id}"] = user.NewDeleteUserID(o.context, o.UserDeleteUserIDHandler)
+	o.handlers["DELETE"]["/user/{id}"] = user.NewDeleteUser(o.context, o.UserDeleteUserHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/user/{id}"] = user.NewGetUserID(o.context, o.UserGetUserIDHandler)
+	o.handlers["GET"]["/user/{id}"] = user.NewGetUser(o.context, o.UserGetUserHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -292,7 +292,7 @@ func (o *UserStorageAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/user/{id}"] = user.NewPutUserID(o.context, o.UserPutUserIDHandler)
+	o.handlers["PUT"]["/user/{id}"] = user.NewPutUser(o.context, o.UserPutUserHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP
