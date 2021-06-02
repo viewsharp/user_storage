@@ -20,14 +20,17 @@ import (
 type User struct {
 
 	// birth date
+	// Required: true
 	// Format: date
-	BirthDate strfmt.Date `json:"birth_date,omitempty"`
+	BirthDate *strfmt.Date `json:"birth_date"`
 
 	// id
-	ID string `json:"id,omitempty"`
+	// Required: true
+	ID *string `json:"id"`
 
 	// name
-	Name string `json:"name,omitempty"`
+	// Required: true
+	Name *string `json:"name"`
 }
 
 // Validate validates this user
@@ -38,6 +41,14 @@ func (m *User) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateName(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -45,11 +56,30 @@ func (m *User) Validate(formats strfmt.Registry) error {
 }
 
 func (m *User) validateBirthDate(formats strfmt.Registry) error {
-	if swag.IsZero(m.BirthDate) { // not required
-		return nil
+
+	if err := validate.Required("birth_date", "body", m.BirthDate); err != nil {
+		return err
 	}
 
 	if err := validate.FormatOf("birth_date", "body", "date", m.BirthDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *User) validateID(formats strfmt.Registry) error {
+
+	if err := validate.Required("id", "body", m.ID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *User) validateName(formats strfmt.Registry) error {
+
+	if err := validate.Required("name", "body", m.Name); err != nil {
 		return err
 	}
 

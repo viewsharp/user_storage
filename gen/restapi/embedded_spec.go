@@ -188,6 +188,9 @@ func init() {
   "definitions": {
     "Error": {
       "type": "object",
+      "required": [
+        "error"
+      ],
       "properties": {
         "error": {
           "type": "string"
@@ -196,6 +199,11 @@ func init() {
     },
     "User": {
       "type": "object",
+      "required": [
+        "id",
+        "name",
+        "birth_date"
+      ],
       "properties": {
         "birth_date": {
           "type": "string",
@@ -211,6 +219,10 @@ func init() {
     },
     "UserEditableData": {
       "type": "object",
+      "required": [
+        "name",
+        "birth_date"
+      ],
       "properties": {
         "birth_date": {
           "type": "string",
@@ -400,6 +412,9 @@ func init() {
   "definitions": {
     "Error": {
       "type": "object",
+      "required": [
+        "error"
+      ],
       "properties": {
         "error": {
           "type": "string"
@@ -408,6 +423,11 @@ func init() {
     },
     "User": {
       "type": "object",
+      "required": [
+        "id",
+        "name",
+        "birth_date"
+      ],
       "properties": {
         "birth_date": {
           "type": "string",
@@ -423,6 +443,10 @@ func init() {
     },
     "UserEditableData": {
       "type": "object",
+      "required": [
+        "name",
+        "birth_date"
+      ],
       "properties": {
         "birth_date": {
           "type": "string",

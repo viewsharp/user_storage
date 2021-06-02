@@ -20,11 +20,13 @@ import (
 type UserEditableData struct {
 
 	// birth date
+	// Required: true
 	// Format: date
-	BirthDate strfmt.Date `json:"birth_date,omitempty"`
+	BirthDate *strfmt.Date `json:"birth_date"`
 
 	// name
-	Name string `json:"name,omitempty"`
+	// Required: true
+	Name *string `json:"name"`
 }
 
 // Validate validates this user editable data
@@ -35,6 +37,10 @@ func (m *UserEditableData) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateName(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -42,11 +48,21 @@ func (m *UserEditableData) Validate(formats strfmt.Registry) error {
 }
 
 func (m *UserEditableData) validateBirthDate(formats strfmt.Registry) error {
-	if swag.IsZero(m.BirthDate) { // not required
-		return nil
+
+	if err := validate.Required("birth_date", "body", m.BirthDate); err != nil {
+		return err
 	}
 
 	if err := validate.FormatOf("birth_date", "body", "date", m.BirthDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *UserEditableData) validateName(formats strfmt.Registry) error {
+
+	if err := validate.Required("name", "body", m.Name); err != nil {
 		return err
 	}
 

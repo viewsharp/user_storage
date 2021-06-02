@@ -16,14 +16,14 @@ paths:
         - user
       summary: Create user
       produces:
-      - application/json
+        - application/json
       parameters:
-      - name: body
-        in: body
-        description: Created user object
-        required: true
-        schema:
-          $ref: '#/definitions/UserEditableData'
+        - name: body
+          in: body
+          description: Created user object
+          required: true
+          schema:
+            $ref: '#/definitions/UserEditableData'
       responses:
         '201':
           description: Success
@@ -121,6 +121,9 @@ definitions:
       birth_date:
         type: string
         format: date
+    required:
+      - name
+      - birth_date
   User:
     type: object
     properties:
@@ -131,8 +134,14 @@ definitions:
       birth_date:
         type: string
         format: date
+    required:
+      - id
+      - name
+      - birth_date
   Error:
     type: object
     properties:
       error:
         type: string
+    required:
+      - error
