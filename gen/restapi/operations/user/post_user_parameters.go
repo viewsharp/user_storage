@@ -39,7 +39,7 @@ type PostUserParams struct {
 	  Required: true
 	  In: body
 	*/
-	Body *models.UserEditableData
+	Body *models.UserCreatingData
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -53,7 +53,7 @@ func (o *PostUserParams) BindRequest(r *http.Request, route *middleware.MatchedR
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body models.UserEditableData
+		var body models.UserCreatingData
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
 				res = append(res, errors.Required("body", "body", ""))

@@ -19,19 +19,19 @@ import (
 	"user_server/gen/models"
 )
 
-// NewPutUserIDParams creates a new PutUserIDParams object
+// NewPatchUserParams creates a new PatchUserParams object
 //
 // There are no default values defined in the spec.
-func NewPutUserIDParams() PutUserIDParams {
+func NewPatchUserParams() PatchUserParams {
 
-	return PutUserIDParams{}
+	return PatchUserParams{}
 }
 
-// PutUserIDParams contains all the bound params for the put user ID operation
+// PatchUserParams contains all the bound params for the patch user operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters PutUserID
-type PutUserIDParams struct {
+// swagger:parameters patchUser
+type PatchUserParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -40,7 +40,7 @@ type PutUserIDParams struct {
 	  Required: true
 	  In: body
 	*/
-	Body *models.UserEditableData
+	Body *models.UserEditingData
 	/*User ID
 	  Required: true
 	  In: path
@@ -51,15 +51,15 @@ type PutUserIDParams struct {
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewPutUserIDParams() beforehand.
-func (o *PutUserIDParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewPatchUserParams() beforehand.
+func (o *PatchUserParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body models.UserEditableData
+		var body models.UserEditingData
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
 				res = append(res, errors.Required("body", "body", ""))
@@ -96,7 +96,7 @@ func (o *PutUserIDParams) BindRequest(r *http.Request, route *middleware.Matched
 }
 
 // bindID binds and validates parameter ID from path.
-func (o *PutUserIDParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
+func (o *PatchUserParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]

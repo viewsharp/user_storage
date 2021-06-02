@@ -48,14 +48,14 @@ func configureAPI(api *operations.UserStorageAPI) http.Handler {
 			return middleware.NotImplemented("operation user.GetUser has not yet been implemented")
 		})
 	}
+	if api.UserPatchUserHandler == nil {
+		api.UserPatchUserHandler = user.PatchUserHandlerFunc(func(params user.PatchUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.PatchUser has not yet been implemented")
+		})
+	}
 	if api.UserPostUserHandler == nil {
 		api.UserPostUserHandler = user.PostUserHandlerFunc(func(params user.PostUserParams) middleware.Responder {
 			return middleware.NotImplemented("operation user.PostUser has not yet been implemented")
-		})
-	}
-	if api.UserPutUserHandler == nil {
-		api.UserPutUserHandler = user.PutUserHandlerFunc(func(params user.PutUserParams) middleware.Responder {
-			return middleware.NotImplemented("operation user.PutUser has not yet been implemented")
 		})
 	}
 

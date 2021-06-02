@@ -14,10 +14,10 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// UserEditableData user editable data
+// UserCreatingData user creating data
 //
-// swagger:model UserEditableData
-type UserEditableData struct {
+// swagger:model UserCreatingData
+type UserCreatingData struct {
 
 	// birth date
 	// Required: true
@@ -26,11 +26,12 @@ type UserEditableData struct {
 
 	// name
 	// Required: true
+	// Max Length: 64
 	Name *string `json:"name"`
 }
 
-// Validate validates this user editable data
-func (m *UserEditableData) Validate(formats strfmt.Registry) error {
+// Validate validates this user creating data
+func (m *UserCreatingData) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateBirthDate(formats); err != nil {
@@ -47,7 +48,7 @@ func (m *UserEditableData) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *UserEditableData) validateBirthDate(formats strfmt.Registry) error {
+func (m *UserCreatingData) validateBirthDate(formats strfmt.Registry) error {
 
 	if err := validate.Required("birth_date", "body", m.BirthDate); err != nil {
 		return err
@@ -60,22 +61,26 @@ func (m *UserEditableData) validateBirthDate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *UserEditableData) validateName(formats strfmt.Registry) error {
+func (m *UserCreatingData) validateName(formats strfmt.Registry) error {
 
 	if err := validate.Required("name", "body", m.Name); err != nil {
+		return err
+	}
+
+	if err := validate.MaxLength("name", "body", *m.Name, 64); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-// ContextValidate validates this user editable data based on context it is used
-func (m *UserEditableData) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this user creating data based on context it is used
+func (m *UserCreatingData) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *UserEditableData) MarshalBinary() ([]byte, error) {
+func (m *UserCreatingData) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -83,8 +88,8 @@ func (m *UserEditableData) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *UserEditableData) UnmarshalBinary(b []byte) error {
-	var res UserEditableData
+func (m *UserCreatingData) UnmarshalBinary(b []byte) error {
+	var res UserCreatingData
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -14,35 +14,25 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// User user
+// UserEditingData user editing data
 //
-// swagger:model User
-type User struct {
+// swagger:model UserEditingData
+type UserEditingData struct {
 
 	// birth date
-	// Required: true
 	// Format: date
-	BirthDate *strfmt.Date `json:"birth_date"`
-
-	// id
-	// Required: true
-	ID *string `json:"id"`
+	BirthDate *strfmt.Date `json:"birth_date,omitempty"`
 
 	// name
-	// Required: true
 	// Max Length: 64
-	Name *string `json:"name"`
+	Name *string `json:"name,omitempty"`
 }
 
-// Validate validates this user
-func (m *User) Validate(formats strfmt.Registry) error {
+// Validate validates this user editing data
+func (m *UserEditingData) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateBirthDate(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateID(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -56,10 +46,9 @@ func (m *User) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *User) validateBirthDate(formats strfmt.Registry) error {
-
-	if err := validate.Required("birth_date", "body", m.BirthDate); err != nil {
-		return err
+func (m *UserEditingData) validateBirthDate(formats strfmt.Registry) error {
+	if swag.IsZero(m.BirthDate) { // not required
+		return nil
 	}
 
 	if err := validate.FormatOf("birth_date", "body", "date", m.BirthDate.String(), formats); err != nil {
@@ -69,19 +58,9 @@ func (m *User) validateBirthDate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *User) validateID(formats strfmt.Registry) error {
-
-	if err := validate.Required("id", "body", m.ID); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *User) validateName(formats strfmt.Registry) error {
-
-	if err := validate.Required("name", "body", m.Name); err != nil {
-		return err
+func (m *UserEditingData) validateName(formats strfmt.Registry) error {
+	if swag.IsZero(m.Name) { // not required
+		return nil
 	}
 
 	if err := validate.MaxLength("name", "body", *m.Name, 64); err != nil {
@@ -91,13 +70,13 @@ func (m *User) validateName(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this user based on context it is used
-func (m *User) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this user editing data based on context it is used
+func (m *UserEditingData) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *User) MarshalBinary() ([]byte, error) {
+func (m *UserEditingData) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -105,8 +84,8 @@ func (m *User) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *User) UnmarshalBinary(b []byte) error {
-	var res User
+func (m *UserEditingData) UnmarshalBinary(b []byte) error {
+	var res UserEditingData
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

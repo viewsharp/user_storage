@@ -60,16 +60,11 @@ func (o *PostUserCreated) WriteResponse(rw http.ResponseWriter, producer runtime
 // PostUserBadRequestCode is the HTTP code returned for type PostUserBadRequest
 const PostUserBadRequestCode int = 400
 
-/*PostUserBadRequest Invalid format
+/*PostUserBadRequest Invalid format (the scheme depends on the implementation of the code generator)
 
 swagger:response postUserBadRequest
 */
 type PostUserBadRequest struct {
-
-	/*
-	  In: Body
-	*/
-	Payload *models.Error `json:"body,omitempty"`
 }
 
 // NewPostUserBadRequest creates PostUserBadRequest with default headers values
@@ -78,27 +73,36 @@ func NewPostUserBadRequest() *PostUserBadRequest {
 	return &PostUserBadRequest{}
 }
 
-// WithPayload adds the payload to the post user bad request response
-func (o *PostUserBadRequest) WithPayload(payload *models.Error) *PostUserBadRequest {
-	o.Payload = payload
-	return o
-}
-
-// SetPayload sets the payload to the post user bad request response
-func (o *PostUserBadRequest) SetPayload(payload *models.Error) {
-	o.Payload = payload
-}
-
 // WriteResponse to the client
 func (o *PostUserBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
 	rw.WriteHeader(400)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
-	}
+}
+
+// PostUserUnprocessableEntityCode is the HTTP code returned for type PostUserUnprocessableEntity
+const PostUserUnprocessableEntityCode int = 422
+
+/*PostUserUnprocessableEntity Invalid format (the scheme depends on the implementation of the code generator)
+
+swagger:response postUserUnprocessableEntity
+*/
+type PostUserUnprocessableEntity struct {
+}
+
+// NewPostUserUnprocessableEntity creates PostUserUnprocessableEntity with default headers values
+func NewPostUserUnprocessableEntity() *PostUserUnprocessableEntity {
+
+	return &PostUserUnprocessableEntity{}
+}
+
+// WriteResponse to the client
+func (o *PostUserUnprocessableEntity) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(422)
 }
 
 // PostUserInternalServerErrorCode is the HTTP code returned for type PostUserInternalServerError

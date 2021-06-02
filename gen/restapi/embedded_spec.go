@@ -45,7 +45,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/UserEditableData"
+              "$ref": "#/definitions/UserCreatingData"
             }
           }
         ],
@@ -57,10 +57,10 @@ func init() {
             }
           },
           "400": {
-            "description": "Invalid format",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
+            "description": "Invalid format (the scheme depends on the implementation of the code generator)"
+          },
+          "422": {
+            "description": "Invalid format (the scheme depends on the implementation of the code generator)"
           },
           "500": {
             "description": "Internal error",
@@ -105,54 +105,6 @@ func init() {
           }
         }
       },
-      "put": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Updated user",
-        "operationId": "putUser",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "User ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "Created user object",
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/UserEditableData"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          },
-          "400": {
-            "description": "Invalid format",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "404": {
-            "description": "User not found"
-          },
-          "500": {
-            "description": "Internal error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      },
       "delete": {
         "tags": [
           "user"
@@ -171,6 +123,51 @@ func init() {
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Updated user",
+        "operationId": "patchUser",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "User ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Created user object",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserEditingData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Invalid format (the scheme depends on the implementation of the code generator)"
           },
           "404": {
             "description": "User not found"
@@ -213,11 +210,12 @@ func init() {
           "type": "string"
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "maxLength": 64
         }
       }
     },
-    "UserEditableData": {
+    "UserCreatingData": {
       "type": "object",
       "required": [
         "name",
@@ -229,7 +227,23 @@ func init() {
           "format": "date"
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "maxLength": 64
+        }
+      }
+    },
+    "UserEditingData": {
+      "type": "object",
+      "properties": {
+        "birth_date": {
+          "type": "string",
+          "format": "date",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 64,
+          "x-nullable": true
         }
       }
     }
@@ -269,7 +283,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/UserEditableData"
+              "$ref": "#/definitions/UserCreatingData"
             }
           }
         ],
@@ -281,10 +295,10 @@ func init() {
             }
           },
           "400": {
-            "description": "Invalid format",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
+            "description": "Invalid format (the scheme depends on the implementation of the code generator)"
+          },
+          "422": {
+            "description": "Invalid format (the scheme depends on the implementation of the code generator)"
           },
           "500": {
             "description": "Internal error",
@@ -329,54 +343,6 @@ func init() {
           }
         }
       },
-      "put": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Updated user",
-        "operationId": "putUser",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "User ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "Created user object",
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/UserEditableData"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          },
-          "400": {
-            "description": "Invalid format",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "404": {
-            "description": "User not found"
-          },
-          "500": {
-            "description": "Internal error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      },
       "delete": {
         "tags": [
           "user"
@@ -395,6 +361,51 @@ func init() {
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Updated user",
+        "operationId": "patchUser",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "User ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Created user object",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserEditingData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Invalid format (the scheme depends on the implementation of the code generator)"
           },
           "404": {
             "description": "User not found"
@@ -437,11 +448,12 @@ func init() {
           "type": "string"
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "maxLength": 64
         }
       }
     },
-    "UserEditableData": {
+    "UserCreatingData": {
       "type": "object",
       "required": [
         "name",
@@ -453,7 +465,23 @@ func init() {
           "format": "date"
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "maxLength": 64
+        }
+      }
+    },
+    "UserEditingData": {
+      "type": "object",
+      "properties": {
+        "birth_date": {
+          "type": "string",
+          "format": "date",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 64,
+          "x-nullable": true
         }
       }
     }

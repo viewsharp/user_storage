@@ -50,11 +50,11 @@ func NewUserStorageAPI(spec *loads.Document) *UserStorageAPI {
 		UserGetUserHandler: user.GetUserHandlerFunc(func(params user.GetUserParams) middleware.Responder {
 			return middleware.NotImplemented("operation user.GetUser has not yet been implemented")
 		}),
+		UserPatchUserHandler: user.PatchUserHandlerFunc(func(params user.PatchUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.PatchUser has not yet been implemented")
+		}),
 		UserPostUserHandler: user.PostUserHandlerFunc(func(params user.PostUserParams) middleware.Responder {
 			return middleware.NotImplemented("operation user.PostUser has not yet been implemented")
-		}),
-		UserPutUserHandler: user.PutUserHandlerFunc(func(params user.PutUserParams) middleware.Responder {
-			return middleware.NotImplemented("operation user.PutUser has not yet been implemented")
 		}),
 	}
 }
@@ -96,10 +96,10 @@ type UserStorageAPI struct {
 	UserDeleteUserHandler user.DeleteUserHandler
 	// UserGetUserHandler sets the operation handler for the get user operation
 	UserGetUserHandler user.GetUserHandler
+	// UserPatchUserHandler sets the operation handler for the patch user operation
+	UserPatchUserHandler user.PatchUserHandler
 	// UserPostUserHandler sets the operation handler for the post user operation
 	UserPostUserHandler user.PostUserHandler
-	// UserPutUserHandler sets the operation handler for the put user operation
-	UserPutUserHandler user.PutUserHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -183,11 +183,11 @@ func (o *UserStorageAPI) Validate() error {
 	if o.UserGetUserHandler == nil {
 		unregistered = append(unregistered, "user.GetUserHandler")
 	}
+	if o.UserPatchUserHandler == nil {
+		unregistered = append(unregistered, "user.PatchUserHandler")
+	}
 	if o.UserPostUserHandler == nil {
 		unregistered = append(unregistered, "user.PostUserHandler")
-	}
-	if o.UserPutUserHandler == nil {
-		unregistered = append(unregistered, "user.PutUserHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -285,14 +285,14 @@ func (o *UserStorageAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/user/{id}"] = user.NewGetUser(o.context, o.UserGetUserHandler)
+	if o.handlers["PATCH"] == nil {
+		o.handlers["PATCH"] = make(map[string]http.Handler)
+	}
+	o.handlers["PATCH"]["/user/{id}"] = user.NewPatchUser(o.context, o.UserPatchUserHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/user"] = user.NewPostUser(o.context, o.UserPostUserHandler)
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/user/{id}"] = user.NewPutUser(o.context, o.UserPutUserHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

@@ -23,16 +23,16 @@ paths:
           description: Created user object
           required: true
           schema:
-            $ref: '#/definitions/UserEditableData'
+            $ref: '#/definitions/UserCreatingData'
       responses:
         '201':
           description: Success
           schema:
             $ref: '#/definitions/User'
         '400':
-          description: Invalid format
-          schema:
-            $ref: '#/definitions/Error'
+          description: Invalid format (the scheme depends on the implementation of the code generator)
+        '422':
+          description: Invalid format (the scheme depends on the implementation of the code generator)
         '500':
           description: Internal error
           schema:
@@ -60,8 +60,8 @@ paths:
           description: Internal error
           schema:
             $ref: '#/definitions/Error'
-    put:
-      operationId: putUser
+    patch:
+      operationId: patchUser
       tags:
         - user
       summary: Updated user
@@ -76,16 +76,14 @@ paths:
           description: Created user object
           required: true
           schema:
-            $ref: '#/definitions/UserEditableData'
+            $ref: '#/definitions/UserEditingData'
       responses:
         '200':
           description: Success
           schema:
             $ref: '#/definitions/User'
         '400':
-          description: Invalid format
-          schema:
-            $ref: '#/definitions/Error'
+          description: Invalid format (the scheme depends on the implementation of the code generator)
         '404':
           description: User not found
         '500':
@@ -113,17 +111,29 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 definitions:
-  UserEditableData:
+  UserCreatingData:
     type: object
     properties:
       name:
         type: string
+        maxLength: 64
       birth_date:
         type: string
         format: date
     required:
       - name
       - birth_date
+  UserEditingData:
+    type: object
+    properties:
+      name:
+        type: string
+        maxLength: 64
+        x-nullable: true
+      birth_date:
+        type: string
+        format: date
+        x-nullable: true
   User:
     type: object
     properties:
@@ -131,6 +141,7 @@ definitions:
         type: string
       name:
         type: string
+        maxLength: 64
       birth_date:
         type: string
         format: date
