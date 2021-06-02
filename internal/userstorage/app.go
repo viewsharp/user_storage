@@ -93,7 +93,7 @@ func (a *App) PatchUser(params user.PatchUserParams) middleware.Responder {
 		WHERE id = $3
 		RETURNING name, birth_date
 	`
-	err := a.db.QueryRowContext(ctx, sqlQuery, params.Body.Name, params.Body.BirthDate, params.ID).Scan(instance.Name, birthDateString)
+	err := a.db.QueryRowContext(ctx, sqlQuery, params.Body.Name, params.Body.BirthDate, params.ID).Scan(instance.Name, &birthDateString)
 	if err == sql.ErrNoRows {
 		return user.NewPatchUserNotFound()
 	}
